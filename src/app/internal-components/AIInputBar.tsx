@@ -1,7 +1,8 @@
 "use client";
 import { useState, useCallback } from 'react';
-import SendReqBtn from "./SendReqBtn";
 import CareerPathVisualization from './CareerPathVisualization';
+import { ChevronUp } from "lucide-react";
+
 
 export default function AIInputBar(){
   const [inputValue, setInputValue] = useState('');
@@ -42,7 +43,7 @@ export default function AIInputBar(){
         <div className="flex-1"></div>
       )}
       
-      <div className="p-4">
+      <div className="w-full p-6 absolute bottom-0 bg-gradient-to-t from-black/80 to-transparent">
         <div className="flex justify-center gap-2 h-[50px] max-w-4xl mx-auto">
           <div className="w-[650px] h-full bg-white rounded-3xl border border-gray-200">
             <input
@@ -53,12 +54,12 @@ export default function AIInputBar(){
               placeholder="Enter skills separated by commas (e.g., JavaScript, Python, Design)"
               className="w-full h-full px-5 outline-0 rounded-3xl"
             />
-          </div>
+          </div>  
           <button
             onClick={handleSubmit}
-            className="px-6 h-full bg-indigo-600 text-white rounded-3xl font-medium hover:bg-indigo-700 transition-colors"
+            className="w-[50px] h-full bg-white rounded-full flex justify-center items-center"
           >
-            Generate Path
+            <ChevronUp/>
           </button>
           {showVisualization && (
             <button
