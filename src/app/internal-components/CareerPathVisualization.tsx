@@ -33,31 +33,14 @@ export default function CareerPathVisualization({
   careerData,
   isLoading,
 }: CareerPathVisualizationProps) {
-  // Debug: log the received data
-  console.log("CareerPathVisualization received:", {
-    skills,
-    careerData,
-    isLoading,
-  });
-  console.log("careerData type:", typeof careerData);
-  console.log(
-    "careerData keys:",
-    careerData ? Object.keys(careerData) : "no data",
-  );
-  console.log("careerRoles:", careerData?.careerRoles);
-  console.log("careerRoles type:", typeof careerData?.careerRoles);
-  console.log("careerRoles isArray:", Array.isArray(careerData?.careerRoles));
 
-  // Generate nodes and edges based on skills and career data
   const { nodes, edges } = useMemo(() => {
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
-    // Only generate nodes when we have actual Gemini data (not loading and have data)
     if (!isLoading && careerData && !careerData.error) {
       console.log("Generating nodes with careerData:", careerData);
 
-      // Add skill nodes only after we have Gemini response
       skills.forEach((skill, index) => {
         nodes.push({
           id: `skill-${index}`,
@@ -74,7 +57,6 @@ export default function CareerPathVisualization({
         });
       });
 
-      // Add career roles from Gemini data - handle different possible structures
       let roles: string[] = [];
       if (careerData.careerRoles && Array.isArray(careerData.careerRoles)) {
         roles = careerData.careerRoles;
@@ -105,10 +87,8 @@ export default function CareerPathVisualization({
           });
         });
 
-        // Create a more logical connection pattern
-        // Connect skills to roles in a distributed way to avoid mesh network
         skills.forEach((skill, skillIndex) => {
-          const roleIndex = skillIndex % roles.length; // Distribute connections
+          const roleIndex = skillIndex % roles.length;
           edges.push({
             id: `edge-skill-${skillIndex}-role-${roleIndex}`,
             source: `skill-${skillIndex}`,
@@ -118,7 +98,6 @@ export default function CareerPathVisualization({
         });
       }
 
-      // Add skills to learn - handle different possible structures
       let skillsToLearn: string[] = [];
       if (careerData.skillsToLearn && Array.isArray(careerData.skillsToLearn)) {
         skillsToLearn = careerData.skillsToLearn;
@@ -180,7 +159,6 @@ export default function CareerPathVisualization({
   const [nodesState, setNodes, onNodesChange] = useNodesState([]);
   const [edgesState, setEdges, onEdgesChange] = useEdgesState([]);
 
-  // Update nodes and edges when they change
   useEffect(() => {
     setNodes(nodes);
     setEdges(edges);
@@ -230,7 +208,6 @@ export default function CareerPathVisualization({
         </ReactFlow>
       </div>
 
-      {/* AI Recommendations Panel */}
       <div className="w-80 fixed left-5 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-lg shadow-xl overflow-y-auto z-50 max-h-[80vh]">
         <div className="p-4">
           {isLoading ? (
