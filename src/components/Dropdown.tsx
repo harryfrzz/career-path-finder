@@ -24,7 +24,7 @@ export default function Dropdown() {
         <SelectItem value="2">
           Board View
           <span className="text-muted-foreground mt-1 block text-xs" data-desc>
-            View your career path using charts
+            View your career path using flowcharts
           </span>
         </SelectItem>
       </SelectContent>

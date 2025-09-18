@@ -50,8 +50,7 @@ export default function AIInputBar(){
       return data;
     } catch (error) {
       console.error('Error calling Gemini API:', error);
-      // Handle error appropriately
-      setCareerData({ error: 'Failed to get career recommendations. Please try again.' });
+      setCareerData({ error: 'Failed to get career recommendations' });
     } finally {
       setIsLoading(false);
     }
@@ -65,8 +64,6 @@ export default function AIInputBar(){
         .filter(Boolean);
       setSkills(newSkills);
       setShowVisualization(true);
-      
-      // Call Gemini API with the skills
       await callGeminiAPI(newSkills);
     }
   }, [inputValue]);
